@@ -13,7 +13,16 @@ class Song extends Object {
 	 * Side-effects: Assigns some default ensemble, title and
 	 *				 and year of your choosing
 	 */
-	// CONSTRUCTOR CODE GOES HERE
+	Song() {
+		Artist[] artists = {new Artist("Dan", "Auerbach"),
+							new Artist("Patrick", "Carney")};
+		Ensemble theBlackKeys = new Ensemble("The Black Keys", artists);
+		//why wont below work?
+		//this(theBlackKeys, "I Got Mine", 2008);
+		mEnsemble = theBlackKeys;
+		mTitle = "I Got Mine";
+		mYearReleased = 2008;
+	}
 
 	/*
 	 * Partial Constructor
@@ -21,7 +30,9 @@ class Song extends Object {
 	 * @param ensemble the ensemble responsible
 	 * @param title the song title
 	 */
-	// CONSTRUCTOR CODE GOES HERE
+	Song(Ensemble ensemble, String title) {
+		this(ensemble, title, 0);
+	}
 
 	/*
 	 * Full Constructor
@@ -29,5 +40,9 @@ class Song extends Object {
 	 * @param title the song title
 	 * @param yearReleased the year the song was released
 	 */
-	// CONSTRUCTOR CODE GOES HERE
+	Song(Ensemble ensemble, String title, int yearReleased) {
+		mEnsemble = ensemble;
+		mTitle = title;
+		mYearReleased = yearReleased;
+	}
 }
