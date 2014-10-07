@@ -1,7 +1,10 @@
 package com.bloc.securitypackages.citrus;
 
-class Orange extends Fruit {
-	Orange() {
-		super("Orange", 130, new Orange(), .21d);
+import com.bloc.securitypackages.colors.*;
+import com.bloc.securitypackages.Fruit;
+
+public class Orange extends Fruit {
+	public Orange() {
+		super("Orange", 130, new OrangeColor(), .21d);
 	}
 }

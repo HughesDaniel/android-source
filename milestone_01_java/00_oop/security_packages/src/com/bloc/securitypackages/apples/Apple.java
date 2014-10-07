@@ -1,7 +1,14 @@
 package com.bloc.securitypackages.apples;
 
-abstract class Apple extends Fruit {
+import com.bloc.securitypackages.Fruit;
+import com.bloc.securitypackages.Color;
 
-	abstract void bite();
+public abstract class Apple extends Fruit {
+
+	public Apple(String name, int i, Color color, double d) {
+		super(name, i, color, d);
+	}
+
+	public abstract void bite();
 
 }
