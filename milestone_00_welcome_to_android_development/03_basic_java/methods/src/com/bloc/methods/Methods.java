@@ -27,12 +27,8 @@ public class Methods extends Object {
 	 * @return the logical opposite of the original
 	 */
 	public boolean giveMeTheOpposite(boolean original) {
-		/************************************************
-		 * Your work goes here
-		 ************************************************/
 
-		// You are free to modify the return statement
-		return false;
+		return !original;
 	}
 
 	/*
@@ -50,9 +46,9 @@ public class Methods extends Object {
 	 * @return nothing
 	 */
 	public void flipTheSign(int[] numbers) {
-		/************************************************
-		 * Your work goes here
-		 ************************************************/
+		for (int i = 0; i < numbers.length; i++) {
+			numbers[i] /= -1;
+		}
 	}
 
 
@@ -78,12 +74,14 @@ public class Methods extends Object {
 	 * @return an array of booleans
 	 */
 	public boolean[] boolsRule(int floor, int[] someNumbers) {
-		/************************************************
-		 * Your work goes here
-		 ************************************************/
+		boolean[] boolArray = new boolean[someNumbers.length];
 
-		// You are free to modify the return statement
-		return new boolean [0];
+		for (int i = 0; i < someNumbers.length; i++) {
+			boolArray[i] = someNumbers[i] >= floor;
+		}
+
+
+		return boolArray;
 	}
 
 	/*
@@ -103,12 +101,18 @@ public class Methods extends Object {
 	 * @return an array of length 2: {min, max}
 	 */
 	public int[] getMinAndMax(int[] someNumbers) {
-		/************************************************
-		 * Your work goes here
-		 ************************************************/
+		int min = someNumbers[0];
+		int max = someNumbers[0];
 
-		// You are free to modify the return statement
-		return new int[2];
+		for (int i = 0; i < someNumbers.length; i++) {
+			int num = someNumbers[i];
+			if (num < min) min = num;
+			if (num > max) max = num;
+		}
+
+		int[] minMaxArray = {min, max};
+
+		return minMaxArray;
 	}
 
 
