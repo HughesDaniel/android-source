@@ -22,13 +22,18 @@ class Dog {
 	// The color of its coat
 	String mColor;
 
-	// ADD MEMBER VARIABLES HERE IF NECESSARY
+	// The number of meals
+	int mNumMeals;
+	//number of plays
+	int mNumPlays;
 
 	/*
 	 * getHairLength
 	 * @return this Dog's hair length
 	 */
-	// ADD YOUR METHOD HERE, NAME MUST MATCH DESCRIPTION
+	public float getHairLength() {
+		return mHairLength;
+	}
 
 	/*
 	 * setHairLength
@@ -36,13 +41,17 @@ class Dog {
 	 * @param hairLength the new length of the hair, a float
 	 * @return nothing
 	 */
-	// ADD YOUR METHOD HERE, NAME MUST MATCH DESCRIPTION
+	public void setHairLength(float length) {
+		mHairLength = length;
+	}
 
 	/*
 	 * getGender
 	 * @return this Dog's gender
 	 */
-	// ADD YOUR METHOD HERE, NAME MUST MATCH DESCRIPTION
+	public String getGender() {
+		return mGender;
+	}
 
 	/*
 	 * setGender
@@ -50,13 +59,21 @@ class Dog {
 	 * @param gender the new gender of the Dog, a String
 	 * @return nothing
 	 */
-	// ADD YOUR METHOD HERE, NAME MUST MATCH DESCRIPTION
+	public void setGender(String gender) {
+		if (gender.equals("male") || gender.equals("female")) {
+			mGender = gender;
+		} else {
+			System.out.println("incorrect string for gender");
+		}
+	}
 
 	/*
 	 * getSize
 	 * @return the size of the dog
 	 */
-	// ADD YOUR METHOD HERE, NAME MUST MATCH DESCRIPTION
+	public String getSize() {
+		return mSize;
+	}
 
 	/*
 	 * setSize
@@ -64,13 +81,22 @@ class Dog {
 	 * @param size the new size of the Dog, a String
 	 * @return nothing
 	 */
-	// ADD YOUR METHOD HERE, NAME MUST MATCH DESCRIPTION
+	public void setSize(String size) {
+		if (size.equals("tiny") || size.equals("small")
+			|| size.equals("average") || size.equals("large")) {
+			mSize = size;
+		} else {
+			System.out.println("incorrect string for size");
+		}
+	}
 
 	/*
 	 * getAge
 	 * @return this Dog's age
 	 */
-	// ADD YOUR METHOD HERE, NAME MUST MATCH DESCRIPTION
+	public int getAge() {
+		return mAge;
+	}
 
 	/*
 	 * setAge
@@ -78,13 +104,17 @@ class Dog {
 	 * @param age the new age of the Dog, an int
 	 * @return nothing
 	 */
-	// ADD YOUR METHOD HERE, NAME MUST MATCH DESCRIPTION
+	public void setAge(int age) {
+		mAge = age;
+	}
 
 	/*
 	 * getWeight
 	 * @return this Dog's weight
 	 */
-	// ADD YOUR METHOD HERE, NAME MUST MATCH DESCRIPTION
+	public float getWeight() {
+		return mWeight;
+	}
 
 	/*
 	 * setWeight
@@ -92,13 +122,21 @@ class Dog {
 	 * @param weight the new weight of the Dog, a float
 	 * @return nothing
 	 */
-	// ADD YOUR METHOD HERE, NAME MUST MATCH DESCRIPTION
+	public void setWeight(float weight) {
+		if (weight >= MIN_WEIGHT) {
+			mWeight = weight;
+		} else {
+			System.out.println("Illegal value for weight, not big enough");
+		}
+	}
 
 	/*
 	 * getColor
 	 * @return this Dog's color
 	 */
-	// ADD YOUR METHOD HERE, NAME MUST MATCH DESCRIPTION
+	public String getColor() {
+		return mColor;
+	}
 
 	/*
 	 * setColor
@@ -106,7 +144,9 @@ class Dog {
 	 * @param color the new color of the Dog's coat, a String
 	 * @return nothing
 	 */
-	// ADD YOUR METHOD HERE, NAME MUST MATCH DESCRIPTION
+	public void setColor(String color) {
+		mColor = color;
+	}
 
 	/*
 	 * feed
@@ -116,7 +156,14 @@ class Dog {
 	 *                   "average" (3 meals later ->) "large"
 	 * @return nothing
 	 */
-	// ADD YOUR METHOD HERE, NAME MUST MATCH DESCRIPTION
+	public void feed() {
+		mWeight += WEIGHT_GAIN;
+		mNumMeals++;
+		if (mNumMeals == 3) {
+			increaseSize(); 
+			mNumMeals = 0;  
+		}
+	}
 
 	/*
 	 * play
@@ -126,7 +173,15 @@ class Dog {
      *              3. The Dog cannot shrink to a weight smaller than *                 MIN_WEIGHT
 	 * @return nothing
 	 */
-	// ADD YOUR METHOD HERE, NAME MUST MATCH DESCRIPTION
+	public void play() {
+		mWeight -= WEIGHT_LOSS;
+		mNumPlays++;
+		if (mWeight < MIN_WEIGHT) mWeight = MIN_WEIGHT;
+		if (mNumPlays == 6) {
+			decreaseSize();
+			mNumPlays = 0;
+		}		
+	}
 
 	/*
 	 * cutHair
@@ -134,6 +189,61 @@ class Dog {
      * The Dog's hair cannot be shorter than 0f
 	 * @return nothing
 	 */
-	// ADD YOUR METHOD HERE, NAME MUST MATCH DESCRIPTION
+	public void cutHair() {
+		mHairLength -= HAIR_CUT_LENGTH;
+		if (mHairLength < 0) mHairLength = 0;
+	}
+
+	/*
+	* increaseSize
+	* private helper function for feed() method. Every 3 meals size must increase
+	* when that happens this function is called to increase the size of the dog
+	* @return nothing
+	*/
+	private void increaseSize() {
+		String size = mSize;
+		switch (size) {
+			case "tiny":
+				mSize = "small";
+				break;
+			case "small":
+				mSize = "average";
+				break;
+			case "average":
+				mSize = "large";
+				break;
+			case "large":
+				break;
+			default:
+				System.out.println("If you see this, you screwed up somehow:" +
+					" increaseSize()");
+		}
+	}
+
+	/*
+	* decreaseSize
+	* private helper function for play() method. Every 6 plays size must 
+	* decrease. When that happens this function is called to decrease the
+	* size of the dog
+	* @return nothing
+	*/
+	private void decreaseSize() {
+		String size = mSize;
+		switch (size) {
+			case "large":
+				mSize = "average";
+				break;
+			case "average":
+				mSize = "small";
+				break;
+			case "small":
+				mSize = "tiny";
+				break;
+			case "tiny":
+				break;
+			default:
+			System.out.println("IF you see this, the end is nigh: decreaseSize");
+		}
+	}
 
 }
