@@ -6,10 +6,15 @@ public class Main extends Object {
 
 	public static void main(String [] args) {
 
-		ToyBox toyBox = new ToyBox();
-		/*
-		 * Put a bunch of Toys in toyBox!
-		 */
+		Toy<Spoon> spoon = new Toy<Spoon>(new Spoon());
+		Toy<Book> book = new Toy<Book>(new Book());
+		Toy<Thing> test = new Toy<Thing>(new Thing("GI Joe"));
+
+		ToyBox toyBox = new ToyBox(spoon, book);
+
+		toyBox.addToy(test);
+
+		//toyBox.addToy(spoon.get());
 
 		assert toyBox.getToyCount() > 0 : "Let's get some toys in that box!";
 		System.out.println("Inside your toybox you've got:");

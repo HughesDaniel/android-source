@@ -1,6 +1,6 @@
 package com.bloc.generics;
 
-public class Toy<T extends Object> extends Object {
+public class Toy<T> extends Object {
 	// The toy!
 	private T mToy;
 
