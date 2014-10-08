@@ -6,8 +6,6 @@ public class Main extends Object {
 
 	public static void main(String [] args) {
 
-		int count = 1;
-		
 		try {
 			tryGetMax();
 		} catch (Exception e) {
