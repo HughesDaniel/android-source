@@ -5,8 +5,20 @@ import java.util.Random;
 public class Main extends Object {
 
 	public static void main(String [] args) {
-		tryGetMax();
-		tryRemove();
+
+		int count = 1;
+		
+		try {
+			tryGetMax();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+
+		try {
+			tryRemove();
+		} catch (IllegalArgumentException e) {
+			System.out.println ("IllegalArgumentException caught");
+		} 
 
 		System.out.println("/************************/");
 		System.out.println("/*                      */");
