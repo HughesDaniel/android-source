@@ -12,29 +12,14 @@ public class Main extends Object {
 		Snake snake = new Snake();
 		Tarantula tarantula = new Tarantula();
 
-		// Accomplish the below using polymorphism
 
-		dog.feed();
-		dog.wash();
-		dog.exercise();
+		Pet[] myPets = {dog, cat, bird, snake, tarantula};
 
-		cat.feed();
-		cat.wash();
-		cat.exercise();
-
-		bird.feed();
-		bird.wash();
-		bird.exercise();
-
-		snake.feed();
-		snake.wash();
-		snake.exercise();
-
-		tarantula.feed();
-		tarantula.wash();
-		tarantula.exercise();
-
-		// Accomplish the above using polymorphism
+		for (Pet pet: myPets) {
+			pet.feed();
+			pet.wash();
+			pet.exercise();
+		}
 
 		assert dog.isFed() && dog.isWashed() && dog.isExercised() : "Your dog needs a little more attention";
 		assert cat.isFed() && cat.isWashed() && cat.isExercised() : "Your cat needs a little more attention";
