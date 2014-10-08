@@ -19,13 +19,10 @@ import java.util.*;
  */
 public class FavoritePastries {
 
-	/*
-	 * Use a HashMap to store the relationship
-	 * between rating and pastry
-	 */
+	private HashMap<Pastry, Integer> mPastryMap;
 
 	public FavoritePastries() {
-		// WORK HERE
+		mPastryMap = new HashMap<Pastry, Integer>();
 	}
 
 	/* 
@@ -42,7 +39,7 @@ public class FavoritePastries {
 	 * @return nothing
 	 */
 	public void addPastry(Pastry pastry, int rating) {
-		// WORK HERE
+		mPastryMap.put(pastry, rating);
 	}
 
 	/*
@@ -56,7 +53,10 @@ public class FavoritePastries {
 	 *		   false otherwise
 	 */
 	public boolean removePastry(Pastry pastry) {
-		// WORK HERE
+		if (mPastryMap.containsKey(pastry)) {
+			mPastryMap.remove(pastry);
+			return true;
+		}
 		return false;
 	}
 
@@ -73,7 +73,9 @@ public class FavoritePastries {
 	 *		   -1 if not found among FavoritePastries
 	 */
 	public int getRatingForPastry(Pastry pastry) {
-		// WORK HERE
+		if (mPastryMap.containsKey(pastry)) {
+			return mPastryMap.get(pastry);
+		}
 		return -1;
 	}
 
@@ -92,8 +94,13 @@ public class FavoritePastries {
 	 *         found
 	 */
 	public Collection<Pastry> getPastriesForRating(int rating) {
-		// WORK HERE
-		return null;
+		Set<Pastry> ratedPastry = new HashSet<Pastry>();
+		for (Pastry pastry : mPastryMap.keySet()) {
+			if (mPastryMap.get(pastry) == rating) {
+				ratedPastry.add(pastry);
+			}
+		}
+		return ratedPastry;
 	}
 
 }
