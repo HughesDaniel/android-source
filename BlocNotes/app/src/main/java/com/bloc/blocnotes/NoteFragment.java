@@ -30,10 +30,11 @@ public class NoteFragment extends Fragment {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
-        linearLayout.addView(editText);
+        linearLayout.addView(editText, params);
 
 
-        return inflater.inflate(R.layout.fragment_note, container, false);
+        return linearLayout;
+        //return inflater.inflate(R.layout.fragment_note, container, false);
     }
 
 
