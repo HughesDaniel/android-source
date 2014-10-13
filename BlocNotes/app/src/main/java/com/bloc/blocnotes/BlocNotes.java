@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-public class BlocNotes extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class BlocNotes extends Activity implements CustomStyleDialogFragment.CustomStyleInterface,
+        NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -108,7 +108,27 @@ public class BlocNotes extends Activity
         if (id == R.id.action_erase) {
             return true;
         }
+        if (id == R.id.action_customize) {
+            FragmentManager fm = getFragmentManager();
+            CustomStyleDialogFragment fragment = new CustomStyleDialogFragment();
+            fragment.show(fm, "fragment_custom_style_dialog");
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStyleChange(CustomStyleDialogFragment dialog, int styleid) {
+
+    }
+
+    @Override
+    public void onFontChange(CustomStyleDialogFragment dialog, String fontName) {
+
+    }
+
+    @Override
+    public void onThemeChange(CustomStyleDialogFragment dialog, int themeId) {
+
     }
 
     /**
