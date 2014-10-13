@@ -1,9 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".BlocNotes" >
-    <item android:id="@+id/action_example"
-        android:title="@string/action_example"
-        android:showAsAction="withText|ifRoom" />
+    <item android:id="@+id/action_erase"
+        android:title="@string/action_erase"
+        android:icon="@drawable/ic_menu_cut"
+        android:showAsAction="ifRoom" />
+    <item android:id="id/action_customize"
+        android:title="@string/action_customize"
+        android:icon="@drawable/ic_menu_view"
+        android:showAsAction="ifRoom"/>
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
