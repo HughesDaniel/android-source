@@ -21,17 +21,15 @@ public class NoteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle bundle) {
         Log.d(TAG, "entered onCreateView()");
+        View rootView = inflater.inflate(R.layout.fragment_note, container, false);
+        editText = (EditText) rootView.findViewById(R.id.et_note);
 
         if (bundle != null && bundle.getString(STRING_KEY) != null) {
             String s = bundle.getString(STRING_KEY);
-            Log.d(TAG, "savedinstance state wasnt null: " + s);
+            editText.setText(s);
         }
 
-        editText = (EditText) getActivity().findViewById(R.id.et_note);
-
-
-
-        return inflater.inflate(R.layout.fragment_note, container, false);
+         return rootView;
     }
 
     @Override
@@ -39,7 +37,6 @@ public class NoteFragment extends Fragment {
         super.onSaveInstanceState(outState);
 
         String s = editText.getText().toString();
-        Log.d(TAG, s);
         outState.putString(STRING_KEY, s);
     }
 
