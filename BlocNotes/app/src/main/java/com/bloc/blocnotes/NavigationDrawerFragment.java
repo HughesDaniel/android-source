@@ -249,8 +249,12 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
 
-        if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
+        if (item.getItemId() == R.id.action_erase) {
+            Toast.makeText(getActivity(), "Coming Soon", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (item.getItemId() == R.id.add_notebook) {
+            Toast.makeText(getActivity(), "Coming Soon!", Toast.LENGTH_LONG).show();
             return true;
         }
 
