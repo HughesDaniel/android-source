@@ -28,6 +28,11 @@ public class BlocNotes extends Activity implements CustomStyleDialogFragment.Cus
      */
     private CharSequence mTitle;
 
+    // Fragment that displays our note editor
+    private NoteFragment noteFragment;
+
+    CustomStyleDialogFragment customDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +50,7 @@ public class BlocNotes extends Activity implements CustomStyleDialogFragment.Cus
         FragmentManager fm = getFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
-        NoteFragment noteFragment = new NoteFragment();
+        noteFragment = new NoteFragment();
         fragmentTransaction.add(R.id.container, noteFragment).commit();
     }
 
@@ -109,9 +114,12 @@ public class BlocNotes extends Activity implements CustomStyleDialogFragment.Cus
             return true;
         }
         if (id == R.id.action_customize) {
+            // show dialog
             FragmentManager fm = getFragmentManager();
-            CustomStyleDialogFragment fragment = new CustomStyleDialogFragment();
-            fragment.show(fm, "fragment_custom_style_dialog");
+            customDialog = new CustomStyleDialogFragment();
+            customDialog.addListener(this);
+            customDialog.show(fm, "fragment_custom_style_dialog");
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -123,6 +131,7 @@ public class BlocNotes extends Activity implements CustomStyleDialogFragment.Cus
 
     @Override
     public void onFontChange(CustomStyleDialogFragment dialog, String fontName) {
+        noteFragment.setFont(fontName);
 
     }
 

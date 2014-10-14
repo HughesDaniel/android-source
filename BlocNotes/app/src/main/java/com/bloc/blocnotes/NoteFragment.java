@@ -1,6 +1,7 @@
 package com.bloc.blocnotes;
 
 import android.app.Fragment;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ public class NoteFragment extends Fragment {
 
     EditText editText;
 
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle bundle) {
         Log.d(TAG, "entered onCreateView()");
@@ -38,6 +40,18 @@ public class NoteFragment extends Fragment {
 
         String s = editText.getText().toString();
         outState.putString(STRING_KEY, s);
+    }
+
+    /*
+    * used to change the font of the editText field
+     */
+    public void setFont(String newFont) {
+        try {
+            Typeface font = Typeface.createFromAsset(getActivity().getAssets(), newFont);
+            editText.setTypeface(font);
+        } catch (Exception e) {
+            Log.d(TAG, "exception in setFont(): " + e.toString());
+        }
     }
 
 }
