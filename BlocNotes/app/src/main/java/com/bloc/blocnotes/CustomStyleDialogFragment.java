@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -20,13 +21,17 @@ public class CustomStyleDialogFragment extends DialogFragment{
     public static final String TAG = ".CustomStyleDialogFragment";
 
     // holds all the objects to be notified of changes
-    private ArrayList<CustomStyleInterface> observers;
+    private ArrayList<CustomStyleInterface> mObservers;
+
+    Button mSmallButton;
+    Button mMediumButton;
+    Button mLargeButton;
 
 
 
     public CustomStyleDialogFragment() {
-        // creates array to hold observers
-        observers = new ArrayList<CustomStyleInterface>();
+        // creates array to hold mObservers
+        mObservers = new ArrayList<CustomStyleInterface>();
     }
 
     @Override
@@ -59,21 +64,44 @@ public class CustomStyleDialogFragment extends DialogFragment{
             }
         });
 
+        // sets up buttons
+        mSmallButton = (Button) view.findViewById(R.id.btn_font_small);
+        mSmallButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeStyle(14);
+            }
+        });
+
         return view;
     }
 
+    /*
+    * method activities use to add themselves as a listener
+     */
     public void  addListener(CustomStyleInterface listener) {
-        observers.add(listener);
+        mObservers.add(listener);
         Log.d(TAG, "Listener: " + listener + " added");
     }
 
+    /*
+    * method activities use to add themselves as a listener
+    */
     public void removeListener(CustomStyleInterface listener) {
-        observers.remove(listener);
+        mObservers.remove(listener);
     }
 
+    // helper method for telling listeners to change font
     private void changeFont(String font) {
-        for (CustomStyleInterface listener: observers) {
+        for (CustomStyleInterface listener: mObservers) {
             listener.onFontChange(this, font);
+        }
+    }
+
+    // helper method for telling listeners to change style
+    private void changeStyle(int size) {
+        for (CustomStyleInterface listener: mObservers) {
+            listener.onStyleChange(this, size);
         }
     }
 

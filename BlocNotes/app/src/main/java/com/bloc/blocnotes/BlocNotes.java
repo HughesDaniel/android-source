@@ -125,7 +125,7 @@ public class BlocNotes extends Activity implements CustomStyleDialogFragment.Cus
 
     @Override
     public void onStyleChange(CustomStyleDialogFragment dialog, int styleid) {
-
+        noteFragment.setStyle(styleid);
     }
 
     @Override
