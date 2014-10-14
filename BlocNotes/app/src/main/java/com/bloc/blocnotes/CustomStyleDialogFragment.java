@@ -1,6 +1,5 @@
 package com.bloc.blocnotes;
 
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +25,8 @@ public class CustomStyleDialogFragment extends DialogFragment{
 
 
     public CustomStyleDialogFragment() {
-        // required empty constructor
+        // creates array to hold observers
+        observers = new ArrayList<CustomStyleInterface>();
     }
 
     @Override
@@ -35,9 +35,6 @@ public class CustomStyleDialogFragment extends DialogFragment{
         Log.d(TAG, "entered onCreateView()");
         View view = inflater.inflate(R.layout.dialog_custom_style, container, false);
         getDialog().setTitle(R.string.customize);
-
-        // creates array to hold observers
-        observers = new ArrayList<CustomStyleInterface>();
 
         // set up and create the system font spinner
         Spinner spinner = (Spinner) view.findViewById(R.id.system_font_spinner);
@@ -52,6 +49,7 @@ public class CustomStyleDialogFragment extends DialogFragment{
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String[] fonts = getResources().getStringArray(R.array.customize_fonts);
                 String font = fonts[parent.getSelectedItemPosition()];
+                Log.d(TAG, "font: " + font);
                 changeFont(font);
             }
 
@@ -65,8 +63,8 @@ public class CustomStyleDialogFragment extends DialogFragment{
     }
 
     public void  addListener(CustomStyleInterface listener) {
-        Log.d(TAG, "Listener: " + listener + " added");
         observers.add(listener);
+        Log.d(TAG, "Listener: " + listener + " added");
     }
 
     public void removeListener(CustomStyleInterface listener) {

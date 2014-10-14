@@ -31,8 +31,6 @@ public class BlocNotes extends Activity implements CustomStyleDialogFragment.Cus
     // Fragment that displays our note editor
     private NoteFragment noteFragment;
 
-    CustomStyleDialogFragment customDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,7 +114,8 @@ public class BlocNotes extends Activity implements CustomStyleDialogFragment.Cus
         if (id == R.id.action_customize) {
             // show dialog
             FragmentManager fm = getFragmentManager();
-            customDialog = new CustomStyleDialogFragment();
+            CustomStyleDialogFragment customDialog = new CustomStyleDialogFragment();
+            // adds activity to fragments list of observers to be notified of changes
             customDialog.addListener(this);
             customDialog.show(fm, "fragment_custom_style_dialog");
             return true;
@@ -132,7 +131,6 @@ public class BlocNotes extends Activity implements CustomStyleDialogFragment.Cus
     @Override
     public void onFontChange(CustomStyleDialogFragment dialog, String fontName) {
         noteFragment.setFont(fontName);
-
     }
 
     @Override
