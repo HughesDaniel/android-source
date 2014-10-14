@@ -5,7 +5,7 @@
         android:title="@string/action_erase"
         android:icon="@drawable/ic_menu_cut"
         android:showAsAction="ifRoom" />
-    <item android:id="id/action_customize"
+    <item android:id="@+id/action_customize"
         android:title="@string/action_customize"
         android:icon="@drawable/ic_menu_view"
         android:showAsAction="ifRoom"/>

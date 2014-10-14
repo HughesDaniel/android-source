@@ -73,6 +73,22 @@ public class CustomStyleDialogFragment extends DialogFragment{
             }
         });
 
+        mMediumButton = (Button) view.findViewById(R.id.btn_font_medium);
+        mMediumButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeStyle(18);
+            }
+        });
+
+        mLargeButton = (Button) view.findViewById(R.id.btn_font_large);
+        mLargeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeStyle(22);
+            }
+        });
+
         return view;
     }
 
@@ -85,7 +101,7 @@ public class CustomStyleDialogFragment extends DialogFragment{
     }
 
     /*
-    * method activities use to add themselves as a listener
+    * method activities use to remove themselves as a listener
     */
     public void removeListener(CustomStyleInterface listener) {
         mObservers.remove(listener);
