@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -23,11 +23,7 @@ public class CustomStyleDialogFragment extends DialogFragment{
     // holds all the objects to be notified of changes
     private ArrayList<CustomStyleInterface> mObservers;
 
-    Button mSmallButton;
-    Button mMediumButton;
-    Button mLargeButton;
-
-
+    RadioGroup mRadioGroupSize;
 
     public CustomStyleDialogFragment() {
         // creates array to hold mObservers
@@ -65,27 +61,17 @@ public class CustomStyleDialogFragment extends DialogFragment{
         });
 
         // sets up buttons
-        mSmallButton = (Button) view.findViewById(R.id.btn_font_small);
-        mSmallButton.setOnClickListener(new View.OnClickListener() {
+        mRadioGroupSize = (RadioGroup) view.findViewById(R.id.rg_font_size);
+        mRadioGroupSize.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                changeStyle(14);
-            }
-        });
-
-        mMediumButton = (Button) view.findViewById(R.id.btn_font_medium);
-        mMediumButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeStyle(18);
-            }
-        });
-
-        mLargeButton = (Button) view.findViewById(R.id.btn_font_large);
-        mLargeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeStyle(22);
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.rb_small_font) {
+                    changeStyle(android.R.attr.textAppearanceSmall);
+                } else if (checkedId == R.id.rb_medium_font) {
+                    changeStyle(android.R.attr.textAppearanceMedium);
+                } else if (checkedId == R.id.rb_large_font) {
+                    changeStyle(android.R.attr.textAppearanceLarge);
+                }
             }
         });
 

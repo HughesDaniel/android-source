@@ -50,7 +50,7 @@ public class NoteFragment extends Fragment {
         newFont = newFont.toLowerCase();
         Log.d(TAG, "setFont: " + newFont);
         try {
-            Typeface font = Typeface.createFromAsset(getActivity().getAssets(), newFont);
+            Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "/fonts/" + newFont);
             editText.setTypeface(font);
         } catch (Exception e) {
             Log.d(TAG, "exception in setFont(): " + e.toString());
@@ -61,7 +61,7 @@ public class NoteFragment extends Fragment {
      used to change the size of the text in the editText field
      */
     public void setStyle(int size) {
-        editText.setTextSize((float) size);
+        editText.setTextAppearance(getActivity(), size);
     }
 
 }
