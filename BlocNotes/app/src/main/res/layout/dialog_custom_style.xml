@@ -28,21 +28,26 @@
             android:layout_height="wrap_content"
             android:text="@string/small"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_state_list"/>
 
         <Button
             android:id="@+id/btn_font_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/medium"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_state_list"/>
 
         <Button
             android:id="@+id/btn_font_large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/large"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_state_list"/>
 
     </LinearLayout>
 
