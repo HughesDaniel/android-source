@@ -34,7 +34,7 @@ public class CustomStyleDialogFragment extends DialogFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle bundle) {
         Log.d(TAG, "entered onCreateView()");
-        View view = inflater.inflate(R.layout.dialog_custom_style, container, false);
+        final View view = inflater.inflate(R.layout.dialog_custom_style, container, false);
         getDialog().setTitle(R.string.customize);
 
         // set up and create the system font spinner
@@ -66,11 +66,11 @@ public class CustomStyleDialogFragment extends DialogFragment{
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.rb_small_font) {
-                    changeStyle(android.R.attr.textAppearanceSmall);
+                    changeStyle(android.R.style.TextAppearance_Small);
                 } else if (checkedId == R.id.rb_medium_font) {
-                    changeStyle(android.R.attr.textAppearanceMedium);
+                    changeStyle(android.R.style.TextAppearance_Medium);
                 } else if (checkedId == R.id.rb_large_font) {
-                    changeStyle(android.R.attr.textAppearanceLarge);
+                    changeStyle(android.R.style.TextAppearance_Large);
                 }
             }
         });
@@ -90,6 +90,7 @@ public class CustomStyleDialogFragment extends DialogFragment{
     * method activities use to remove themselves as a listener
     */
     public void removeListener(CustomStyleInterface listener) {
+
         mObservers.remove(listener);
     }
 
