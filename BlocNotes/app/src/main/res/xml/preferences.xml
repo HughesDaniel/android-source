@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/appearance">
+
+        <ListPreference
+            android:key="@string/prefs_key_text_size"
+            android:title="@string/text_size"
+            android:entries="@array/text_size_array_names"
+            android:entryValues="@array/text_size_array_names" />
+
+        <ListPreference
+            android:key="@string/prefs_key_font"
+            android:title="@string/font"
+            android:entries="@array/customize_fonts"
+            android:entryValues="@array/customize_fonts" />
+
+
+    </PreferenceCategory>
+</PreferenceScreen>

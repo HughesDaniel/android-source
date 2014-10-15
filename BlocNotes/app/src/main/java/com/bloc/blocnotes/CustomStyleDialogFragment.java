@@ -1,6 +1,8 @@
 package com.bloc.blocnotes;
 
 import android.app.DialogFragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
  */
 public class CustomStyleDialogFragment extends DialogFragment{
 
+
     public static final String TAG = ".CustomStyleDialogFragment";
 
     // holds all the objects to be notified of changes
@@ -26,7 +29,7 @@ public class CustomStyleDialogFragment extends DialogFragment{
     RadioGroup mRadioGroupSize;
 
     public CustomStyleDialogFragment() {
-        // creates array to hold mObservers
+        // creates array to hold observers
         mObservers = new ArrayList<CustomStyleInterface>();
     }
 
@@ -48,10 +51,15 @@ public class CustomStyleDialogFragment extends DialogFragment{
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // The selection will be the font, which will be converted to proper file name
                 String[] fonts = getResources().getStringArray(R.array.customize_fonts);
-                String font = fonts[parent.getSelectedItemPosition()];
+                String font = fonts[parent.getSelectedItemPosition()] + ".ttf";
+                font = font.toLowerCase();
                 Log.d(TAG, "font: " + font);
                 changeFont(font);
+                // update shared preferences
+                String key = getResources().getString(R.string.prefs_key_font);
+                updateSharedPrefs(key, font, null);
             }
 
             @Override
@@ -65,13 +73,20 @@ public class CustomStyleDialogFragment extends DialogFragment{
         mRadioGroupSize.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int value = 0;
                 if (checkedId == R.id.rb_small_font) {
-                    changeStyle(android.R.style.TextAppearance_Small);
+                    value = android.R.style.TextAppearance_Small;
+                    changeStyle(value);
                 } else if (checkedId == R.id.rb_medium_font) {
-                    changeStyle(android.R.style.TextAppearance_Medium);
+                    value = android.R.style.TextAppearance_Medium;
+                    changeStyle(value);
                 } else if (checkedId == R.id.rb_large_font) {
-                    changeStyle(android.R.style.TextAppearance_Large);
+                    value = android.R.style.TextAppearance_Large;
+                    changeStyle(value);
                 }
+                // update shared preferences
+                String key = getResources().getString(R.string.prefs_key_text_size);
+                updateSharedPrefs(key, null, value);
             }
         });
 
@@ -106,6 +121,18 @@ public class CustomStyleDialogFragment extends DialogFragment{
         for (CustomStyleInterface listener: mObservers) {
             listener.onStyleChange(this, size);
         }
+    }
+
+    // helper method for updating shared preference file
+    private void updateSharedPrefs(String key, String str_value, Integer int_value) {
+        SharedPreferences.Editor editor = getActivity().getPreferences(
+                Context.MODE_PRIVATE).edit();
+        if (str_value != null) {
+            editor.putString(key, str_value);
+        } else if (int_value != null) {
+            editor.putInt(key, int_value);
+        }
+        editor.commit();
     }
 
     /*

@@ -49,7 +49,7 @@ public class BlocNotes extends Activity implements CustomStyleDialogFragment.Cus
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
         noteFragment = new NoteFragment();
-        fragmentTransaction.add(R.id.container, noteFragment).commit();
+        fragmentTransaction.replace(R.id.container, noteFragment).commit();
     }
 
     @Override
@@ -119,6 +119,11 @@ public class BlocNotes extends Activity implements CustomStyleDialogFragment.Cus
             customDialog.addListener(this);
             customDialog.show(fm, "fragment_custom_style_dialog");
             return true;
+        }
+        if (id == R.id.action_settings) {
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, new PrefsFragment())
+                    .commit();
         }
         return super.onOptionsItemSelected(item);
     }

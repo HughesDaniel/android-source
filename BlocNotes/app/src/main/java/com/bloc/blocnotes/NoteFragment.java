@@ -1,6 +1,8 @@
 package com.bloc.blocnotes;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +32,8 @@ public class NoteFragment extends Fragment {
             String s = bundle.getString(STRING_KEY);
             editText.setText(s);
         }
+        // update UI based on users past preference selections
+        getUserPrefs();
 
          return rootView;
     }
@@ -37,17 +41,28 @@ public class NoteFragment extends Fragment {
     @Override
     public void  onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
+        // saves the text in the editor on destruction of fragment
         String s = editText.getText().toString();
         outState.putString(STRING_KEY, s);
+    }
+
+    // helper method that restores user preferences on creation of fragment
+    private void getUserPrefs() {
+        String text_size = getString(R.string.prefs_key_text_size);
+        String font = getString(R.string.prefs_key_font);
+
+        SharedPreferences prefs = getActivity().getPreferences(Context.MODE_PRIVATE);
+        setStyle(prefs.getInt(text_size, android.R.style.TextAppearance_DeviceDefault_Medium));
+        setFont(prefs.getString(font, null));
     }
 
     /*
     * used to change the font of the editText field
      */
     public void setFont(String newFont) {
-        newFont += ".ttf";
-        newFont = newFont.toLowerCase();
+        if (newFont == null) {
+            return;
+        }
         Log.d(TAG, "setFont: " + newFont);
         try {
             Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "/fonts/" + newFont);
