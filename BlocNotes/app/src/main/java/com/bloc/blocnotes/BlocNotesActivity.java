@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-public class BlocNotes extends Activity implements CustomStyleDialogFragment.CustomStyleInterface,
+public class BlocNotesActivity extends Activity implements CustomStyleDialogFragment.CustomStyleInterface,
         NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
@@ -124,6 +124,7 @@ public class BlocNotes extends Activity implements CustomStyleDialogFragment.Cus
             getFragmentManager().beginTransaction()
                     .replace(R.id.container, new PrefsFragment())
                     .commit();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -184,7 +185,7 @@ public class BlocNotes extends Activity implements CustomStyleDialogFragment.Cus
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
-            ((BlocNotes) activity).onSectionAttached(
+            ((BlocNotesActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
