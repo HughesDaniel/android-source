@@ -25,7 +25,7 @@ public class NoteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle bundle) {
         Log.d(TAG, "entered onCreateView()");
-        View rootView = inflater.inflate(R.layout.fragment_note, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_simple_edit_text, container, false);
         editText = (EditText) rootView.findViewById(R.id.et_note);
 
         if (bundle != null && bundle.getString(STRING_KEY) != null) {
@@ -76,7 +76,11 @@ public class NoteFragment extends Fragment {
      used to change the size of the text in the editText field
      */
     public void setStyle(int size) {
-        editText.setTextAppearance(getActivity(), size);
+        try {
+            editText.setTextAppearance(getActivity(), size);
+        } catch (Exception e) {
+
+        }
     }
 
 }

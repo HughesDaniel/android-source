@@ -1,16 +1,18 @@
 package com.bloc.blocnotes;
 
 
-import android.app.Activity;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,8 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 /**
@@ -39,6 +41,8 @@ public class NavigationDrawerFragment extends Fragment {
      * expands it. This shared preference tracks this.
      */
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
+
+    private static final String TAG = ".NavigationDrawerFragment.java";
 
     /**
      * A pointer to the current callbacks instance (the Activity).
@@ -97,18 +101,21 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                        "Extra 1",
-                        "Extra 2",
-                }));
+
+        // gets a cursor with the notebooks from the database
+        Cursor notebookCursor = getNotebooks();
+
+        // adapter that will hold the info for the listview
+        SimpleCursorAdapter notebookAdapter =
+                new SimpleCursorAdapter(getActivity(),
+                        android.R.layout.simple_list_item_activated_1,
+                        notebookCursor,
+                        new String[] {"name"},
+                        new int[] {android.R.id.text1}, 0);
+
+        mDrawerListView.setAdapter(notebookAdapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+
         return mDrawerListView;
     }
 
@@ -254,7 +261,10 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
         if (item.getItemId() == R.id.add_notebook) {
-            Toast.makeText(getActivity(), "Coming Soon!", Toast.LENGTH_LONG).show();
+            FragmentManager fm = getFragmentManager();
+            AddNotebookDialogFragment addNotebook = new AddNotebookDialogFragment();
+            addNotebook.show(fm, "add_notebook_dialog_fragment");
+
             return true;
         }
 
@@ -274,6 +284,14 @@ public class NavigationDrawerFragment extends Fragment {
 
     private ActionBar getActionBar() {
         return getActivity().getActionBar();
+    }
+
+    // Returns a cursor with all the data from the Notebook table
+    private Cursor getNotebooks() {
+        String query = "SELECT * FROM Notebook";
+
+        return BlocNotesApplication.get(getActivity()).getBlocDb()
+                .getReadableDatabase().rawQuery(query, null);
     }
 
     /**

@@ -10,7 +10,7 @@ import com.bloc.blocnotes.com.bloc.database.BlocNotesDbHelper;
  */
 public class BlocNotesApplication extends Application {
 
-    BlocNotesDbHelper BlocDb;
+    private BlocNotesDbHelper BlocDb;
 
     public BlocNotesApplication() {
     }

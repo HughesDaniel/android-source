@@ -13,7 +13,7 @@ public class NotebookTable extends Table {
 
     @Override
     public String getCreateStatement() {
-        String createStatement = "CREATE TABLE Notebook {" +
+        String createStatement = "CREATE TABLE Notebook (" +
                 "_id INTEGER PRIMARY KEY," +
                 "name TEXT" +
                 " )";

@@ -5,8 +5,10 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,9 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bloc.blocnotes.com.bloc.database.BlocNotesDbHelper;
+
 
 public class BlocNotesActivity extends Activity implements CustomStyleDialogFragment.CustomStyleInterface,
-        NavigationDrawerFragment.NavigationDrawerCallbacks {
+        NavigationDrawerFragment.NavigationDrawerCallbacks, AddNotebookDialogFragment.AddNotebookDialogListener {
+
+    private static final String TAG = ".BlocNotesActivity";
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -142,6 +148,21 @@ public class BlocNotesActivity extends Activity implements CustomStyleDialogFrag
     @Override
     public void onThemeChange(CustomStyleDialogFragment dialog, int themeId) {
 
+    }
+
+    // required method for the AddNoteBookActionListener interface
+    @Override
+    public void onFinishedAddBotebook(final String name) {
+        Log.d(TAG, "onfinishedAddNotebook() name:" + name);
+        final BlocNotesDbHelper db = BlocNotesApplication.get(this).getBlocDb();
+        new Thread() {
+           public void run() {
+               ContentValues values = new ContentValues();
+               values.put("name", name);
+               db.getWritableDatabase().insert("Notebook", null, values);
+               db.close();
+           }
+        }.start();
     }
 
     /**
