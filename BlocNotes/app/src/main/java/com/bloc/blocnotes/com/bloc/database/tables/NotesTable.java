@@ -15,7 +15,7 @@ public class NotesTable extends Table {
     public String getCreateStatement() {
         String createStatement = "CREATE TABLE Notes (" +
                 "_id INTEGER PRIMARY KEY," +
-                "body TEXT" +
+                "body TEXT," +
                 "notebook INTEGER" +
                 " )";
         return createStatement;

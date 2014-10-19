@@ -39,9 +39,25 @@ public class BlocNotesDbHelper extends SQLiteOpenHelper {
            db.execSQL(tables.next().getCreateStatement());
         }
 
+        // just a bunch of data for testing
         ContentValues values = new ContentValues();
         values.put("name", "Uncategorized");
         long uncategorizedRowId = db.insert("Notebook", null, values);
+
+        values.clear();
+        values.put("body", "blah blah this is a note");
+        values.put("notebook", uncategorizedRowId);
+        db.insert("Notes", null, values);
+
+        values.clear();
+        values.put("body", "wakka wakka, this is another note");
+        values.put("notebook", uncategorizedRowId);
+        db.insert("Notes", null, values);
+
+        values.clear();
+        values.put("body", "I came here to drink beer and leave notes");
+        values.put("notebook", uncategorizedRowId);
+        db.insert("Notes", null, values);
     }
 
     @Override

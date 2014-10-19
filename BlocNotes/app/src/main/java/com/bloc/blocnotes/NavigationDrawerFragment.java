@@ -62,6 +62,8 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
+    private SimpleCursorAdapter mNotebookAdapter;
+
     public NavigationDrawerFragment() {
     }
 
@@ -103,17 +105,17 @@ public class NavigationDrawerFragment extends Fragment {
         });
 
         // gets a cursor with the notebooks from the database
-        Cursor notebookCursor = getNotebooks();
+        //Cursor notebookCursor = getNotebooks();
 
         // adapter that will hold the info for the listview
-        SimpleCursorAdapter notebookAdapter =
+        mNotebookAdapter =
                 new SimpleCursorAdapter(getActivity(),
                         android.R.layout.simple_list_item_activated_1,
-                        notebookCursor,
+                        getNotebooks(),
                         new String[] {"name"},
                         new int[] {android.R.id.text1}, 0);
 
-        mDrawerListView.setAdapter(notebookAdapter);
+        mDrawerListView.setAdapter(mNotebookAdapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
         return mDrawerListView;
@@ -287,11 +289,15 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     // Returns a cursor with all the data from the Notebook table
-    private Cursor getNotebooks() {
+    public Cursor getNotebooks() {
         String query = "SELECT * FROM Notebook";
 
         return BlocNotesApplication.get(getActivity()).getBlocDb()
                 .getReadableDatabase().rawQuery(query, null);
+    }
+
+    public SimpleCursorAdapter getmNotebookAdapter() {
+        return mNotebookAdapter;
     }
 
     /**

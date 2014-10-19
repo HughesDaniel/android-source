@@ -13,11 +13,10 @@ import android.widget.TextView;
 /**
  * Created by Daniel on 10/16/2014.
  */
-public class AddNotebookDialogFragment extends DialogFragment
-        implements TextView.OnEditorActionListener {
+public class AddNotebookDialogFragment extends DialogFragment {
 
     public interface AddNotebookDialogListener {
-        void onFinishedAddBotebook(String name);
+        void onFinishedAddNotebook(String name);
     }
 
     private static final String TAG = ".AddNoteBookDialogFragment";
@@ -36,24 +35,28 @@ public class AddNotebookDialogFragment extends DialogFragment
         getDialog().setTitle("Add Notebook");
 
         mEditText = (EditText) view.findViewById(R.id.et_note);
-        mEditText.setOnEditorActionListener(this);
+        mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                // 0 right now for debug as emulator doesnt have soft keyboard
+                // replace with EditorInfo.IME_ACTION_DONE
+                Log.d(TAG, "actionId = " + actionId);
+                if (actionId == 0) {
+                    // Return string to host and close dialog
+                    AddNotebookDialogListener activity = (AddNotebookDialogListener) getActivity();
+                    activity.onFinishedAddNotebook(mEditText.getText().toString());
+                    closeDialog();
+
+                    return true;
+                }
+                return false;
+            }
+        });
 
         return view;
     }
 
-    @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-         // 0 right now for debug as emulator doesnt have soft keyboard
-        // replace with EditorInfo.IME_ACTION_DONE
-        Log.d(TAG, "actionId = " + actionId);
-        if (actionId == 0) {
-            // Return string to host and close dialog
-            AddNotebookDialogListener activity = (AddNotebookDialogListener) getActivity();
-            activity.onFinishedAddBotebook(mEditText.getText().toString());
-            this.dismiss();
-
-            return true;
-        }
-        return false;
+    private void closeDialog() {
+        this.dismiss();
     }
 }

@@ -2,25 +2,22 @@ package com.bloc.blocnotes;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.ContentValues;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.bloc.blocnotes.com.bloc.database.BlocNotesDbHelper;
 
 
-public class BlocNotesActivity extends Activity implements CustomStyleDialogFragment.CustomStyleInterface,
-        NavigationDrawerFragment.NavigationDrawerCallbacks, AddNotebookDialogFragment.AddNotebookDialogListener {
+public class BlocNotesActivity extends Activity implements
+        CustomStyleDialogFragment.CustomStyleInterface,
+        NavigationDrawerFragment.NavigationDrawerCallbacks,
+        AddNotebookDialogFragment.AddNotebookDialogListener {
 
     private static final String TAG = ".BlocNotesActivity";
 
@@ -58,12 +55,13 @@ public class BlocNotesActivity extends Activity implements CustomStyleDialogFrag
         fragmentTransaction.replace(R.id.container, noteFragment).commit();
     }
 
+    // required method for NavigationDrawerCallBack Interface
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, new NotesDisplayFragment())
                 .commit();
     }
 
@@ -135,80 +133,52 @@ public class BlocNotesActivity extends Activity implements CustomStyleDialogFrag
         return super.onOptionsItemSelected(item);
     }
 
+    // required method for CustomStyleInterface
     @Override
     public void onStyleChange(CustomStyleDialogFragment dialog, int styleid) {
         noteFragment.setStyle(styleid);
     }
 
+    // required method for CustomStyleInterface
     @Override
     public void onFontChange(CustomStyleDialogFragment dialog, String fontName) {
         noteFragment.setFont(fontName);
     }
 
+    // required method for CustomStyleInterface
     @Override
     public void onThemeChange(CustomStyleDialogFragment dialog, int themeId) {
 
     }
 
     // required method for the AddNoteBookActionListener interface
+    // adds a new row to the notebook table in our database
     @Override
-    public void onFinishedAddBotebook(final String name) {
-        Log.d(TAG, "onfinishedAddNotebook() name:" + name);
-        final BlocNotesDbHelper db = BlocNotesApplication.get(this).getBlocDb();
-        new Thread() {
-           public void run() {
-               ContentValues values = new ContentValues();
-               values.put("name", name);
-               db.getWritableDatabase().insert("Notebook", null, values);
-               db.close();
-           }
-        }.start();
+    public void onFinishedAddNotebook(final String name) {
+
+        new addNotebookToDb().execute(name);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
+    private class addNotebookToDb extends AsyncTask<String, Void, Void> {
 
-        TextView textView;
+        @Override
+        protected Void doInBackground(String... params) {
+            // adds the notebook we created to the notebook table in our DB
+            BlocNotesDbHelper db = BlocNotesApplication.get(getApplicationContext()).getBlocDb();
+            ContentValues values = new ContentValues();
+            values.put("name", params[0]);
+            db.getWritableDatabase().insert("Notebook", null, values);
+            db.close();
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
+            return null;
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_bloc_notes, container, false);
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
 
-            textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getArguments().getInt(ARG_SECTION_NUMBER) + "");
-
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((BlocNotesActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
+            mNavigationDrawerFragment.getmNotebookAdapter()
+                    .swapCursor(mNavigationDrawerFragment.getNotebooks());
         }
     }
-
 }
