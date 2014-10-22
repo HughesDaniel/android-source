@@ -6,7 +6,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -58,7 +57,7 @@ public class BlocNotesActivity extends Activity implements
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, new NotesDisplayFragment())
+                .replace(R.id.container, NotesDisplayFragment.newInstance(position))
                 .commit();
     }
 
@@ -153,11 +152,9 @@ public class BlocNotesActivity extends Activity implements
     @Override
     public void onFinishedAddNotebook(final String name) {
 
+        // adds the notebook to the database
         new NotebookModel(name);
-        NotebookCenter dafuq = new NotebookCenter();
-        for (String s: dafuq.getNotebookNames()) {
-            Log.d(TAG, s);
-        }
-        mNavigationDrawerFragment.updateNotebookAdapter();
+        // tells the fragment to update the view so the new notebook is displayed
+        mNavigationDrawerFragment.updateNotebookAdapter(name);
     }
 }

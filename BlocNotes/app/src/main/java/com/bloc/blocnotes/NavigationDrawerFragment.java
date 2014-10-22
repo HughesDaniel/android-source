@@ -7,7 +7,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -20,8 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 /**
@@ -62,7 +61,7 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
-    private SimpleCursorAdapter mNotebookAdapter;
+    private ArrayAdapter mNotebookAdapter;
 
     public NavigationDrawerFragment() {
     }
@@ -104,16 +103,9 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
-        // gets a cursor with the notebooks from the database
-        //Cursor notebookCursor = getNotebooks();
-
         // adapter that will hold the info for the listview
-        mNotebookAdapter =
-                new SimpleCursorAdapter(getActivity(),
-                        android.R.layout.simple_list_item_activated_1,
-                        getNotebooks(),
-                        new String[] {"name"},
-                        new int[] {android.R.id.text1}, 0);
+        mNotebookAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,
+                android.R.id.text1, new NotebookCenter().getNotebookNames());
 
         mDrawerListView.setAdapter(mNotebookAdapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
@@ -288,17 +280,10 @@ public class NavigationDrawerFragment extends Fragment {
         return getActivity().getActionBar();
     }
 
-    // Returns a cursor with all the data from the Notebook table
-    public Cursor getNotebooks() {
-        String query = "SELECT * FROM Notebook";
-
-        return BlocNotesApplication.getBlocDb()
-                .getReadableDatabase().rawQuery(query, null);
-    }
-
     // method to update the notebook adapter that can be called by hosting activity
-    public void updateNotebookAdapter() {
-        mNotebookAdapter.swapCursor(getNotebooks());
+    public void updateNotebookAdapter(String name) {
+        mNotebookAdapter.add(name);
+        mNotebookAdapter.notifyDataSetChanged();
     }
 
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.bloc.blocnotes.NoteModel;
 import com.bloc.blocnotes.com.bloc.database.tables.NotebookTable;
 import com.bloc.blocnotes.com.bloc.database.tables.NotesTable;
 import com.bloc.blocnotes.com.bloc.database.tables.Table;
@@ -58,6 +59,9 @@ public class BlocNotesDbHelper extends SQLiteOpenHelper {
         values.put("body", "I came here to drink beer and leave notes");
         values.put("notebook", uncategorizedRowId);
         db.insert("Notes", null, values);
+
+        String note1 = "just along for the ride";
+        new NoteModel(note1, uncategorizedRowId);
     }
 
     @Override

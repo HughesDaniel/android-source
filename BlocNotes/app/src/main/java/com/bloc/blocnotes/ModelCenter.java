@@ -8,7 +8,10 @@ import java.util.Map;
  */
 public abstract class ModelCenter<T extends Model> {
 
+    // Will store the name of the table in the DB
     protected String mTableName;
+
+    // Hashmap that will store the model objects
     protected Map<Long, T> mModels;
 
     public ModelCenter(String table) {
@@ -16,6 +19,7 @@ public abstract class ModelCenter<T extends Model> {
         mModels = new HashMap<Long, T>();
     }
 
+    // returns a model object given its unique rowId
     public Model get(long rowId) {
         T model = null;
         if (mModels.containsKey(rowId)) {
@@ -27,6 +31,6 @@ public abstract class ModelCenter<T extends Model> {
         return model;
     }
 
-
+    // Used to create an object if it doesnt already exist
     protected abstract  T _createModel();
 }

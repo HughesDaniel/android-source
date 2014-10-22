@@ -24,10 +24,4 @@ public class BlocNotesApplication extends Application {
         return BlocDb;
     }
 
-    public static BlocNotesApplication get() {
-        //return (BlocNotesApplication) context.getApplicationContext();
-        return null;
-
-
-    }
 }
