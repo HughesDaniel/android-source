@@ -4,14 +4,11 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.ContentValues;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.bloc.blocnotes.com.bloc.database.BlocNotesDbHelper;
 
 
 public class BlocNotesActivity extends Activity implements
@@ -156,29 +153,11 @@ public class BlocNotesActivity extends Activity implements
     @Override
     public void onFinishedAddNotebook(final String name) {
 
-        new addNotebookToDb().execute(name);
-    }
-
-    private class addNotebookToDb extends AsyncTask<String, Void, Void> {
-
-        @Override
-        protected Void doInBackground(String... params) {
-            // adds the notebook we created to the notebook table in our DB
-            BlocNotesDbHelper db = BlocNotesApplication.get(getApplicationContext()).getBlocDb();
-            ContentValues values = new ContentValues();
-            values.put("name", params[0]);
-            db.getWritableDatabase().insert("Notebook", null, values);
-            db.close();
-
-            return null;
+        new NotebookModel(name);
+        NotebookCenter dafuq = new NotebookCenter();
+        for (String s: dafuq.getNotebookNames()) {
+            Log.d(TAG, s);
         }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            mNavigationDrawerFragment.getmNotebookAdapter()
-                    .swapCursor(mNavigationDrawerFragment.getNotebooks());
-        }
+        mNavigationDrawerFragment.updateNotebookAdapter();
     }
 }

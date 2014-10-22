@@ -67,4 +67,10 @@ public class BlocNotesDbHelper extends SQLiteOpenHelper {
             tables.next().onUpgrade(db, oldVersion, newVersion);
         }
     }
+
+    public void inertIntoDb(ContentValues values, String tableName) {
+
+        this.getWritableDatabase().insert(tableName, null, values);
+
+    }
 }

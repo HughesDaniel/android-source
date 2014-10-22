@@ -1,7 +1,6 @@
 package com.bloc.blocnotes;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.bloc.blocnotes.com.bloc.database.BlocNotesDbHelper;
 
@@ -10,7 +9,7 @@ import com.bloc.blocnotes.com.bloc.database.BlocNotesDbHelper;
  */
 public class BlocNotesApplication extends Application {
 
-    private BlocNotesDbHelper BlocDb;
+    private static BlocNotesDbHelper BlocDb;
 
     public BlocNotesApplication() {
     }
@@ -18,13 +17,17 @@ public class BlocNotesApplication extends Application {
     @Override
     public void onCreate() {
         BlocDb = new BlocNotesDbHelper(this);
+
     }
 
-    public BlocNotesDbHelper getBlocDb() {
+    public static BlocNotesDbHelper getBlocDb() {
         return BlocDb;
     }
 
-    public static BlocNotesApplication get(Context context) {
-        return (BlocNotesApplication) context.getApplicationContext();
+    public static BlocNotesApplication get() {
+        //return (BlocNotesApplication) context.getApplicationContext();
+        return null;
+
+
     }
 }

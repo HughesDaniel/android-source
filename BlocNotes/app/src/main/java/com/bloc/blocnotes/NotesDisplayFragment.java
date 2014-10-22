@@ -24,7 +24,7 @@ public class NotesDisplayFragment extends Fragment {
                              Bundle savedInstanceState) {
        mListView = (ListView) inflater.inflate(R.layout.listview_fragment, container, false);
 
-        SQLiteDatabase db = BlocNotesApplication.get(getActivity()).getBlocDb()
+        SQLiteDatabase db = BlocNotesApplication.getBlocDb()
                 .getReadableDatabase();
 
         // gets a particular notebook from our notebook DB

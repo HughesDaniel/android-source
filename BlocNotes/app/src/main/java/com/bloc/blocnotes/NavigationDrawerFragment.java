@@ -292,13 +292,15 @@ public class NavigationDrawerFragment extends Fragment {
     public Cursor getNotebooks() {
         String query = "SELECT * FROM Notebook";
 
-        return BlocNotesApplication.get(getActivity()).getBlocDb()
+        return BlocNotesApplication.getBlocDb()
                 .getReadableDatabase().rawQuery(query, null);
     }
 
-    public SimpleCursorAdapter getmNotebookAdapter() {
-        return mNotebookAdapter;
+    // method to update the notebook adapter that can be called by hosting activity
+    public void updateNotebookAdapter() {
+        mNotebookAdapter.swapCursor(getNotebooks());
     }
+
 
     /**
      * Callbacks interface that all activities using this fragment must implement.
