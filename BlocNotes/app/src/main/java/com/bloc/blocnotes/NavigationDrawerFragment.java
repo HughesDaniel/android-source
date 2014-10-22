@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -22,6 +23,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -63,6 +67,8 @@ public class NavigationDrawerFragment extends Fragment {
 
     private ArrayAdapter mNotebookAdapter;
 
+    private List<String> mNotebookNameList = new ArrayList<String>();
+
     public NavigationDrawerFragment() {
     }
 
@@ -79,6 +85,9 @@ public class NavigationDrawerFragment extends Fragment {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
             mFromSavedInstanceState = true;
         }
+
+        // requires read access, so we do it in a separate thread
+        new PopulateNotebookNamesList().execute();
 
         // Select either the default item (0) or the last selected item.
         //selectItem(mCurrentSelectedPosition);
@@ -105,7 +114,7 @@ public class NavigationDrawerFragment extends Fragment {
 
         // adapter that will hold the info for the listview
         mNotebookAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,
-                android.R.id.text1, new NotebookCenter().getNotebookNames());
+                android.R.id.text1, mNotebookNameList);
 
         mDrawerListView.setAdapter(mNotebookAdapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
@@ -295,5 +304,24 @@ public class NavigationDrawerFragment extends Fragment {
          * Called when an item in the navigation drawer is selected.
          */
         void onNavigationDrawerItemSelected(int position);
+    }
+
+    public class PopulateNotebookNamesList extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            mNotebookNameList = new NotebookCenter().getNotebookNames();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            if (mNotebookAdapter != null) { // Adapter has already been created, we need update it
+                mNotebookAdapter.notifyDataSetChanged();
+            }
+        }
+
     }
 }

@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -150,11 +151,31 @@ public class BlocNotesActivity extends Activity implements
     // required method for the AddNoteBookActionListener interface
     // adds a new row to the notebook table in our database
     @Override
-    public void onFinishedAddNotebook(final String name) {
+    public void onFinishedAddNotebook(String name) {
+        // starts new thread to create notebook and update adapter
+        new createNotebookModel(name).execute();
+    }
 
-        // adds the notebook to the database
-        new NotebookModel(name);
-        // tells the fragment to update the view so the new notebook is displayed
-        mNavigationDrawerFragment.updateNotebookAdapter(name);
+    public class createNotebookModel extends AsyncTask<Void, Void, Void> {
+
+        private String notebookName;
+
+        public createNotebookModel(String name) {
+            notebookName = name;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            // adds the notebook to the database
+            new NotebookModel(notebookName);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            // tells the fragment to update the view so the new notebook is displayed
+            mNavigationDrawerFragment.updateNotebookAdapter(notebookName);
+        }
     }
 }
