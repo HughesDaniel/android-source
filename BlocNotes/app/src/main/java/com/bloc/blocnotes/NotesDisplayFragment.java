@@ -80,7 +80,7 @@ public class NotesDisplayFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            if (mArrayAdapter != null) { // Apdater has been created, we need to update it
+            if (mArrayAdapter != null) { // Adapter has been created, we need to update it
                 mArrayAdapter.notifyDataSetChanged();
             }
         }

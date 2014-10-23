@@ -16,6 +16,7 @@ public class NotebookCenter extends ModelCenter<NotebookModel> {
     // The column name in our DB
     private static final String COL_NAME = "name";
 
+
     public NotebookCenter() {
         super(TABLE_NAME);
     }
@@ -34,7 +35,7 @@ public class NotebookCenter extends ModelCenter<NotebookModel> {
         null, null, null, null, null, null);
 
         int columnIndex = names.getColumnIndex(COL_NAME);
-;
+
         while(names.moveToNext()) {
             notebookNames.add(names.getString(columnIndex));
         }

@@ -48,6 +48,7 @@ public class NotebookModel extends Model {
         ContentValues values = new ContentValues();
         values.put(COL_NAME, mName);
         dbHelper.getWritableDatabase().insert(mTableName, null, values);
+
     }
 
     private long setRowId(String name){

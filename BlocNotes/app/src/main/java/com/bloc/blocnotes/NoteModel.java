@@ -2,7 +2,6 @@ package com.bloc.blocnotes;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.util.Log;
 
 /**
  * Created by Daniel on 10/22/2014.
@@ -21,13 +20,11 @@ public class NoteModel extends Model {
     private static final String COL_NOTEBOOK = "notebook";
 
     public NoteModel(String body, long notebook) {
-        Log.d("DAFUQ", "im in notemodel");
         mTableName = "Notes";
         mBody = body;
         mNotebook = notebook;
 
         if (!doesExist()) {
-            Log.d("DAFUQ", "it didnt exist!");
             createEntry();
         }
 
@@ -52,6 +49,7 @@ public class NoteModel extends Model {
         values.put(COL_BODY, mBody);
         values.put(COL_NOTEBOOK, mNotebook);
         dbHelper.getWritableDatabase().insert(mTableName, null, values);
+
     }
 
     private long setRowId() {
