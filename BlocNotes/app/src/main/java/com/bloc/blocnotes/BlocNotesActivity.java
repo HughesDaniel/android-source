@@ -14,7 +14,9 @@ import android.view.MenuItem;
 public class BlocNotesActivity extends Activity implements
         CustomStyleDialogFragment.CustomStyleInterface,
         NavigationDrawerFragment.NavigationDrawerCallbacks,
-        AddNotebookDialogFragment.AddNotebookDialogListener {
+        AddNotebookDialogFragment.AddNotebookDialogListener,
+        NotesDisplayFragment.CreateNewNote {
+
 
     private static final String TAG = ".BlocNotesActivity";
 
@@ -50,16 +52,6 @@ public class BlocNotesActivity extends Activity implements
 
         noteFragment = new NoteFragment();
         fragmentTransaction.replace(R.id.container, noteFragment).commit();
-    }
-
-    // required method for NavigationDrawerCallBack Interface
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, NotesDisplayFragment.newInstance(position))
-                .commit();
     }
 
     public void onSectionAttached(int number) {
@@ -130,6 +122,10 @@ public class BlocNotesActivity extends Activity implements
         return super.onOptionsItemSelected(item);
     }
 
+
+    //                    vvvvvvvvvvvvvvv  CAll BACKS vvvvvvvvvvvvvvvvv
+
+
     // required method for CustomStyleInterface
     @Override
     public void onStyleChange(CustomStyleDialogFragment dialog, int styleid) {
@@ -155,6 +151,27 @@ public class BlocNotesActivity extends Activity implements
         // starts new thread to create notebook and update adapter
         new createNotebookModel(name).execute();
     }
+
+    // Required method for CreateNewNote interface, replaces fragment with note edit fragment
+    @Override
+    public void onCreateNewNote(NotesDisplayFragment fragment) {
+        // update the main content by replacing fragments
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, new NoteFragment())
+                .commit();
+    }
+
+    // required method for NavigationDrawerCallBack Interface
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+        // update the main content by replacing fragments
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, NotesDisplayFragment.newInstance(position))
+                .commit();
+    }
+
 
     public class createNotebookModel extends AsyncTask<Void, Void, Void> {
 

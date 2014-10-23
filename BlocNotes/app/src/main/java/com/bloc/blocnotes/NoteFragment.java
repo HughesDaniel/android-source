@@ -24,7 +24,6 @@ public class NoteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle bundle) {
-        Log.d(TAG, "entered onCreateView()");
         View rootView = inflater.inflate(R.layout.fragment_simple_edit_text, container, false);
         editText = (EditText) rootView.findViewById(R.id.et_note);
 
@@ -63,7 +62,6 @@ public class NoteFragment extends Fragment {
         if (newFont == null) {
             return;
         }
-        Log.d(TAG, "setFont: " + newFont);
         try {
             Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "/fonts/" + newFont);
             editText.setTypeface(font);

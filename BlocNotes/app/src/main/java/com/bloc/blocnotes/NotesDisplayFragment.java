@@ -1,5 +1,6 @@
 package com.bloc.blocnotes;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -7,7 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +20,14 @@ import java.util.List;
  * Created by Daniel on 10/17/2014.
  */
 public class NotesDisplayFragment extends Fragment {
+
+    // Interface hosting activity must implement
+    public interface CreateNewNote {
+        public void onCreateNewNote(NotesDisplayFragment fragment);
+    }
+
+    // Where we will store the activity that is hosting this fragment
+    private CreateNewNote mCallbacks;
 
     private static final String TAG = ".NotesDisplayFragment.java";
 
@@ -52,20 +64,49 @@ public class NotesDisplayFragment extends Fragment {
         new PopulateNotesList().execute();
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mCallbacks = (CreateNewNote) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Activity must implement CreateNewNote ");
+        }
+    }
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-       mListView = (ListView) inflater.inflate(R.layout.listview_fragment, container, false);
 
-       mArrayAdapter = new ArrayAdapter(getActivity(), R.layout.notebook_note,
+        LinearLayout rootView = (LinearLayout) inflater.inflate(R.layout.notes_list,
+                container, false);
+
+        mListView = (ListView) rootView.findViewById(R.id.lv_note_list);
+
+        // The view we will use to display when there are no notes in the adapter
+        LinearLayout empty = (LinearLayout) rootView.findViewById(R.id.LL_empty_note_list);
+        // Button in the empty view we will use to create a new note
+        ImageButton imgBtn = (ImageButton) rootView.findViewById(R.id.ib_empty_note_list);
+        imgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO ask how to fix this
+                mCallbacks.onCreateNewNote();
+            }
+        });
+
+
+        mListView.setEmptyView(empty);
+
+        mArrayAdapter = new ArrayAdapter(getActivity(), R.layout.notebook_note,
                 R.id.tv_notebook_note,
                 mNotesList);
 
         mListView.setAdapter(mArrayAdapter);
 
-        return mListView;
+        return rootView;
     }
 
 

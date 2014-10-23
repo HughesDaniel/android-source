@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -112,12 +113,16 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
+        Log.d(TAG, "entering onCreateView(), checking list");
+        for (String s: mNotebookNameList) {
+            Log.d(TAG, s);
+        }
         // adapter that will hold the info for the listview
         mNotebookAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,
                 android.R.id.text1, mNotebookNameList);
 
         mDrawerListView.setAdapter(mNotebookAdapter);
-        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+        //mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
         return mDrawerListView;
     }
@@ -310,6 +315,7 @@ public class NavigationDrawerFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... params) {
+            Log.d(TAG, "Starting Async doinbackground");
             mNotebookNameList = new NotebookCenter().getNotebookNames();
             return null;
         }
@@ -318,8 +324,11 @@ public class NavigationDrawerFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
+            Log.d(TAG, "ASYNC: notebook adapter != null? "  + String.valueOf(mNotebookAdapter != null));
             if (mNotebookAdapter != null) { // Adapter has already been created, we need update it
                 mNotebookAdapter.notifyDataSetChanged();
+                mNotebookAdapter.notifyDataSetChanged();
+                Log.d(TAG, "number of items in our list: " + String.valueOf(mNotebookNameList.size()));
             }
         }
 
