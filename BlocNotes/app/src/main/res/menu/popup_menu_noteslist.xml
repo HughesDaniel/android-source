@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/uno"
+        android:title="Do some shit" />
+
+    <item
+        android:id="@+id/dos"
+        android:title="Do some other shit" />
+
+</menu>

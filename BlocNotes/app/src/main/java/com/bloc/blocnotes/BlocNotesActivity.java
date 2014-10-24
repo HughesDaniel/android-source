@@ -7,8 +7,12 @@ import android.app.FragmentTransaction;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 
 public class BlocNotesActivity extends Activity implements
@@ -170,6 +174,27 @@ public class BlocNotesActivity extends Activity implements
         fragmentManager.beginTransaction()
                 .replace(R.id.container, NotesDisplayFragment.newInstance(position))
                 .commit();
+    }
+
+    public void dafuq(View v) {
+        Log.d(TAG, "clicked 3 dots");
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.getMenuInflater().inflate(R.menu.popup_menu_noteslist, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case (R.id.uno):
+                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        return true;
+                    case (R.id.dos):
+                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
 

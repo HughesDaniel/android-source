@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +92,7 @@ public class NotesDisplayFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO ask how to fix this
-                mCallbacks.onCreateNewNote();
+                mCallbacks.onCreateNewNote(new NotesDisplayFragment());
             }
         });
 

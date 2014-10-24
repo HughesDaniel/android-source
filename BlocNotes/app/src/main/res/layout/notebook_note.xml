@@ -2,12 +2,23 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tv_notebook_note"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="0px"
+        android:layout_height="wrap_content"
+        android:layout_weight=".9"/>
+
+    <ImageButton
+        android:id="@+id/ib_note_popup"
+        android:layout_width="0px"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="@drawable/ic_action_navigation_more_vert"
+        android:layout_weight=".1"
+        android:onClick="dafuq" />
 
 </LinearLayout>
