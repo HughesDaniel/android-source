@@ -1,6 +1,9 @@
 package com.bloc.blocnotes;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -47,7 +50,7 @@ public class NotesAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         View cView = convertView;
 
@@ -79,6 +82,10 @@ public class NotesAdapter extends BaseAdapter {
                             case (R.id.popup_item_2):
                                 Toast.makeText(mContext, "TWO!", Toast.LENGTH_LONG).show();
                                 return true;
+                            case (R.id.popup_remindme):
+                                Log.d(TAG, "ITEM: " + getItem(position).toString());
+                                reminder(getItem(position));
+                                return true;
                         }
 
                         return false;
@@ -90,5 +97,21 @@ public class NotesAdapter extends BaseAdapter {
         });
 
         return cView;
+    }
+
+    private void reminder(Object o) {
+        Log.d(TAG, "entered Reminder()");
+        Intent reminderReceiverIntent = new Intent(mContext, ReminderReceiver.class);
+        reminderReceiverIntent.setAction("SHOW_NOTIFICATION");
+        reminderReceiverIntent.putExtra("EXTRA_REMINDER_TITLE", "Temporary Title");
+        reminderReceiverIntent.putExtra("EXTRA_REMINDER_BODY", o.toString());
+
+        PendingIntent reminderPendingIntent = PendingIntent.getBroadcast(mContext, 0,
+                reminderReceiverIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        AlarmManager alarmService = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+        alarmService.set(AlarmManager.RTC,
+                System.currentTimeMillis() + 5000,
+                reminderPendingIntent);
     }
 }

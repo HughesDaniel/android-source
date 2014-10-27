@@ -17,6 +17,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name="com.bloc.blocnotes.ReminderReceiver">
+            <intent-filter>
+                <action android:name="SHOW_NOTIFICATION" />
+                <action android:name="ACTION_SNOOZE" />
+            </intent-filter>
+
+        </receiver>
+
     </application>
+
+
 
 </manifest>

@@ -20,6 +20,8 @@
     <string name="appearance">Appearance</string>
     <string name="text_size">Text Size</string>
     <string name="font">Font</string>
+    <string name="delete">Delete</string>
+    <string name="snooze">Snooze</string>
 
     <string-array name="customize_fonts">
         <item>System Font</item>

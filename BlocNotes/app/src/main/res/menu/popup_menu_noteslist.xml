@@ -10,4 +10,8 @@
         android:id="@+id/popup_item_2"
         android:title="Do something else" />
 
+    <item
+        android:id="@+id/popup_remindme"
+        android:title="Remind Me..." />
+
 </menu>
