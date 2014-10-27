@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -34,7 +34,7 @@ public class NotesDisplayFragment extends Fragment {
             "long_bunlde_key";
 
     private ListView mListView;
-    private ArrayAdapter mArrayAdapter;
+    private NotesAdapter mArrayAdapter;
 
     // The list of notes we will give the adapter for display
     private List<String> mNotesList = new ArrayList<String>();
@@ -85,23 +85,24 @@ public class NotesDisplayFragment extends Fragment {
         mListView = (ListView) rootView.findViewById(R.id.lv_note_list);
 
         // The view we will use to display when there are no notes in the adapter
-        LinearLayout empty = (LinearLayout) rootView.findViewById(R.id.LL_empty_note_list);
+        FrameLayout empty = (FrameLayout) rootView.findViewById(R.id.fl_empty_note_list);
         // Button in the empty view we will use to create a new note
         ImageButton imgBtn = (ImageButton) rootView.findViewById(R.id.ib_empty_note_list);
         imgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO ask how to fix this
-                mCallbacks.onCreateNewNote(new NotesDisplayFragment());
+                mCallbacks.onCreateNewNote(NotesDisplayFragment.this);
             }
         });
 
 
         mListView.setEmptyView(empty);
 
-        mArrayAdapter = new ArrayAdapter(getActivity(), R.layout.notebook_note,
-                R.id.tv_notebook_note,
-                mNotesList);
+//        mArrayAdapter = new ArrayAdapter(getActivity(), R.layout.notebook_note,
+//                R.id.tv_notebook_note,
+//                mNotesList);
+
+        mArrayAdapter = new NotesAdapter(getActivity(), mNotesList);
 
         mListView.setAdapter(mArrayAdapter);
 
@@ -121,7 +122,9 @@ public class NotesDisplayFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if (mArrayAdapter != null) { // Adapter has been created, we need to update it
-                mArrayAdapter.notifyDataSetChanged();
+                mArrayAdapter = new NotesAdapter(getActivity(), mNotesList);
+
+                mListView.setAdapter(mArrayAdapter);
             }
         }
     }

@@ -324,11 +324,13 @@ public class NavigationDrawerFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            Log.d(TAG, "ASYNC: notebook adapter != null? "  + String.valueOf(mNotebookAdapter != null));
             if (mNotebookAdapter != null) { // Adapter has already been created, we need update it
-                mNotebookAdapter.notifyDataSetChanged();
-                mNotebookAdapter.notifyDataSetChanged();
-                Log.d(TAG, "number of items in our list: " + String.valueOf(mNotebookNameList.size()));
+                mNotebookAdapter = new ArrayAdapter(getActivity(),
+                        android.R.layout.simple_list_item_1,
+                        android.R.id.text1, mNotebookNameList);
+
+                mDrawerListView.setAdapter(mNotebookAdapter);
+
             }
         }
 

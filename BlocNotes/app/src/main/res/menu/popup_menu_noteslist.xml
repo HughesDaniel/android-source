@@ -3,11 +3,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/uno"
-        android:title="Do some shit" />
+        android:id="@+id/popup_item_1"
+        android:title="Do something" />
 
     <item
-        android:id="@+id/dos"
-        android:title="Do some other shit" />
+        android:id="@+id/popup_item_2"
+        android:title="Do something else" />
 
 </menu>

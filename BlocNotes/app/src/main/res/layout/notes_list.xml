@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:id="@+id/LL_empty_note_list"
+    <FrameLayout
+        android:id="@+id/fl_empty_note_list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
@@ -23,6 +23,6 @@
             android:layout_gravity="center"
             android:background="@drawable/new_note" />
 
-    </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>

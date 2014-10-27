@@ -18,7 +18,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:background="@drawable/ic_action_navigation_more_vert"
-        android:layout_weight=".1"
-        android:onClick="dafuq" />
+        android:layout_weight=".1" />
 
 </LinearLayout>
