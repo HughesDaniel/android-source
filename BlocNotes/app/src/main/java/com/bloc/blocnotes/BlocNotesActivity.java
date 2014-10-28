@@ -156,8 +156,9 @@ public class BlocNotesActivity extends Activity implements
     @Override
     public void onCreateNewNote(NotesDisplayFragment fragment) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
+        FragmentManager fm = getFragmentManager();
+        fm.beginTransaction()
+                .setCustomAnimations(R.animator.fade_in, R.animator.fade_out_shrink)
                 .replace(R.id.container, new NoteFragment())
                 .commit();
     }
@@ -168,6 +169,7 @@ public class BlocNotesActivity extends Activity implements
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
+                .setCustomAnimations(R.animator.fade_in, R.animator.fade_out_shrink)
                 .replace(R.id.container, NotesDisplayFragment.newInstance(position))
                 .commit();
     }

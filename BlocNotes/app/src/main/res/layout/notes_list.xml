@@ -9,12 +9,13 @@
     <ListView
         android:id="@+id/lv_note_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true" />
 
     <FrameLayout
         android:id="@+id/fl_empty_note_list"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent" >
 
         <ImageButton
             android:id="@+id/ib_empty_note_list"
